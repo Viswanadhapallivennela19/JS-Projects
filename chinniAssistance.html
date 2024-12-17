@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinni Assistance</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #4c8bf5, #6a4ef2);
+            color: #ffffff;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Floating Dots for Animation */
+        body::before,
+        body::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: floating 8s infinite;
+            z-index: 0;
+        }
+
+        body::before {
+            top: -100px;
+            left: -100px;
+        }
+
+        body::after {
+            bottom: -100px;
+            right: -100px;
+            animation-delay: 4s;
+        }
+
+        @keyframes floating {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(20px, 20px);
+            }
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            max-width: 600px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #status {
+            margin-top: 1rem;
+            font-size: 1rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.8);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Button Styles */
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            color: #ffffff;
+            background: linear-gradient(90deg, #FF6A3D, #E94D35);
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            button {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Chinni Assistance</h1>
+    <p>Click the button below and say a command like <strong>"Chinni open The Google"</strong> or <strong>"Chinni open The YouTube"</strong> to proceed.</p>
+    <button id="startListening">Start Listening</button>
+    <p id="status">Status: Not Listening</p>
+    <p id="status-1"></p>
+    <script>
+        function speechRecognition(){
+            let speechRecognition=window.SpeechRecognition || window.webkitSpeechRecognition
+            if(speechRecognition){
+                let recognition=new speechRecognition
+             
+                recognition.lang='en-US'
+                let command={
+                    "chinni open the google": "https://www.google.com",
+  "chinni open the youtube": "https://www.youtube.com",
+  "chinni open the facebook": "https://www.facebook.com",
+  "chinni open the amazon": "https://www.amazon.com",
+  "chinni open the wikipedia": "https://www.wikipedia.org",
+  "chinni open the twitter": "https://www.twitter.com",
+  "chinni open the instagram": "https://www.instagram.com",
+  "chinni open the linkedin": "https://www.linkedin.com",
+  "chinni open the reddit": "https://www.reddit.com",
+  "chinni open the netflix": "https://www.netflix.com",
+  "chinni open the microsoft": "https://www.microsoft.com",
+  "chinni open the apple": "https://www.apple.com",
+  "chinni open the github": "https://github.com",
+  "chinni open the stack overflow": "https://stackoverflow.com",
+  "chinni open the pinterest": "https://www.pinterest.com",
+  "chinni open the spotify": "https://www.spotify.com",
+  "chinni open the adobe": "https://www.adobe.com",
+  "chinni open the bbc": "https://www.bbc.com",
+  "chinni open the cnn": "https://www.cnn.com",
+  "chinni open the yahoo": "https://www.yahoo.com",
+  "chinni open the walmart": "https://www.walmart.com",
+  "chinni open the ebay": "https://www.ebay.com",
+  "chinni open the bing": "https://www.bing.com",
+  "chinni open the tumblr": "https://www.tumblr.com",
+  "chinni open the wordpress": "https://www.wordpress.com",
+  "chinni open the paypal": "https://www.paypal.com",
+  "chinni open the aliexpress": "https://www.aliexpress.com",
+  "chinni open the dropbox": "https://www.dropbox.com",
+  "chinni open the vimeo": "https://www.vimeo.com",
+  "chinni open the twitch": "https://www.twitch.tv",
+  "chinni open the zoom": "https://www.zoom.us",
+  "chinni open the slack": "https://www.slack.com",
+  "chinni open the gitlab": "https://gitlab.com",
+  "chinni open the quora": "https://www.quora.com",
+  "chinni open the medium": "https://www.medium.com",
+  "chinni open the shopify": "https://www.shopify.com",
+  "chinni open the canva": "https://www.canva.com",
+  "chinni open the instacart": "https://www.instacart.com",
+  "chinni open the hulu": "https://www.hulu.com",
+  "chinni open the tripadvisor": "https://www.tripadvisor.com",
+  "chinni open the yahoo mail": "https://mail.yahoo.com",
+  "chinni open the trello": "https://www.trello.com",
+  "chinni open the udemy": "https://www.udemy.com",
+  "chinni open the coursera": "https://www.coursera.org",
+  "chinni open the khan academy": "https://www.khanacademy.org",
+  "chinni open the imdb": "https://www.imdb.com",
+  "chinni open the flickr": "https://www.flickr.com",
+  "chinni open the shutterstock": "https://www.shutterstock.com",
+  "chinni open the airbnb": "https://www.airbnb.com",
+  "chinni open the merriam webster": "https://www.merriam-webster.com",
+  "chinni open the indeed": "https://www.indeed.com",
+  "chinni open the pinterest": "https://www.pinterest.com",
+  "chinni open the wordpress": "https://www.wordpress.org",
+  "chinni open the spotify": "https://www.spotify.com",
+  "chinni open the baidu": "https://www.baidu.com",
+  "chinni open the alibaba": "https://www.alibaba.com",
+  "chinni open the hacker news": "https://news.ycombinator.com",
+  "chinni open the dropbox": "https://www.dropbox.com",
+  "chinni open the slack": "https://www.slack.com",
+  "chinni open the uber": "https://www.uber.com",
+  "chinni open the wix": "https://www.wix.com",
+  "chinni open the squarespace": "https://www.squarespace.com",
+  "chinni open the wechat": "https://www.wechat.com",
+  "chinni open the telegram": "https://telegram.org",
+  "chinni open the whatsapp": "https://www.whatsapp.com",
+  "chinni open the skype": "https://www.skype.com",
+  "chinni open the redbubble": "https://www.redbubble.com",
+  "chinni open the viber": "https://www.viber.com",
+  "chinni open the yahoo finance": "https://finance.yahoo.com",
+  "chinni open the forbes": "https://www.forbes.com",
+  "chinni open the cnbc": "https://www.cnbc.com",
+  "chinni open the bloomberg": "https://www.bloomberg.com",
+  "chinni open the nytimes": "https://www.nytimes.com",
+  "chinni open the bbc": "https://www.bbc.com/news",
+  "chinni open the guardian": "https://www.theguardian.com",
+  "chinni open the verge": "https://www.theverge.com",
+  "chinni open the techcrunch": "https://techcrunch.com",
+  "chinni open the engadget": "https://www.engadget.com",
+  "chinni open the wired": "https://www.wired.com",
+  "chinni open the business insider": "https://www.businessinsider.com",
+  "chinni open the mit technology review": "https://www.technologyreview.com",
+  "chinni open the zdnet": "https://www.zdnet.com",
+  "chinni open the lifehacker": "https://www.lifehacker.com",
+  "chinni open the mashable": "https://www.mashable.com",
+  "chinni open the cnet": "https://www.cnet.com",
+  "chinni open the howstuffworks": "https://www.howstuffworks.com",
+  "chinni open the national geographic": "https://www.nationalgeographic.com",
+  "chinni open the nasa": "https://www.nasa.gov",
+  "chinni open the wikipedia": "https://www.wikipedia.org",
+  "chinni open the openai": "https://www.openai.com",
+  "chinni open the stackexchange": "https://stackexchange.com",
+  "chinni open the vox": "https://www.vox.com",
+  "chinni open the buzzfeed": "https://www.buzzfeed.com",
+  "chinni open the vice": "https://www.vice.com",
+  "chinni open the new york post": "https://nypost.com",
+  "chinni open the abc news": "https://abcnews.go.com",
+  "chinni open the cbs news": "https://www.cbsnews.com",
+  "chinni open the nbc news": "https://www.nbcnews.com",
+  "chinni open the reuters": "https://www.reuters.com",
+  "chinni open the al jazeera": "https://www.aljazeera.com",
+  "chinni open the times": "https://www.thetimes.co.uk",
+  "chinni open the independent": "https://www.independent.co.uk",
+  "chinni open the economist": "https://www.economist.com",
+  "chinni open the chatgpt": "https://chat.openai.com",
+  "chinni open the hotstar": "https://www.hotstar.com",
+  "chinni open the swiggy": "https://www.swiggy.com",
+  "chinni open the zomato": "https://www.zomato.com",
+  "chinni open the phonepay": "https://www.phonepe.com",
+  "chinni open the googlepay": "https://pay.google.com",
+  "chinni open the amazon": "https://www.amazon.com",
+  "chinni open the ajio": "https://www.ajio.com",
+  "chinni open the whatsapp": "https://www.whatsapp.com",
+  "chinni open the telegram": "https://telegram.org",
+  "chinni open the naukari": "https://www.naukri.com",
+  "chinni open the googlemaps": "https://maps.google.com",
+  "chinni open the gmail": "https://www.gmail.com",
+  "chinni open the coursera": "https://www.coursera.org",
+  "chinni open the wynk": "https://wynk.in",
+  "chinni open the flipcart": "https://www.flipkart.com",
+  "chinni open the whereismytrain": "https://www.whereismytrain.in",
+  "chinni open the irctc": "https://www.irctc.co.in",
+  "chinni open the bigbasket": "https://www.bigbasket.com",
+  "chinni open the googlemeet": "https://meet.google.com",
+  "chinni open the airtel": "https://www.airtel.in",
+  "chinni open the redbus": "https://www.redbus.in",
+  "chinni open the rapido": "https://www.rapido.bike",
+  "chinni open the makemytrip": "https://www.makemytrip.com",
+  "chinni open the biscare": "https://www.biscare.com",
+  "chinni open the myssc": "https://www.myssc.com",
+  "chinni open the meesho": "https://www.meesho.com",
+  "chinni open the aadhaar": "https://uidai.gov.in",
+  "chinni open the twitter": "https://twitter.com",
+  "chinni open the gotomeeting": "https://www.goto.com/meeting",
+  "chinni open the kfc": "https://www.kfc.com",
+  "chinni open the myntra": "https://www.myntra.com",
+  "chinni open the zudio": "https://www.zudio.com",
+  "chinni open the coursera": "https://www.coursera.org",
+  "chinni open the edx": "https://www.edx.org",
+  "chinni open the khanacademy": "https://www.khanacademy.org",
+  "chinni open the udemy": "https://www.udemy.com",
+  "chinni open the futurelearn": "https://www.futurelearn.com",
+  "chinni open the linkedinlearning": "https://www.linkedin.com/learning",
+  "chinni open the skillshare": "https://www.skillshare.com",
+  "chinni open the academia": "https://www.academia.edu",
+  "chinni open the classcentral": "https://www.classcentral.com",
+  "chinni open the mitopencourseware": "https://ocw.mit.edu",
+  "chinni open the udacity": "https://www.udacity.com",
+  "chinni open the openlearn": "https://www.open.edu/openlearn",
+  "chinni open the harvardonline": "https://online-learning.harvard.edu",
+  "chinni open the stanfordonline": "https://online.stanford.edu",
+  "chinni open the googleforeducation": "https://edu.google.com",
+  "chinni open the nationalgeographiceducation": "https://education.nationalgeographic.org",
+  "chinni open the bbcbitesize": "https://www.bbc.co.uk/bitesize",
+  "chinni open the k12": "https://www.k12.com",
+  "chinni open the byjus": "https://www.byjus.com",
+  "chinni open the edmodo": "https://www.edmodo.com",
+  "chinni open the brainly": "https://www.brainly.com",
+  "chinni open the toppr": "https://www.toppr.com",
+  "chinni open the vedantu": "https://www.vedantu.com",
+  "chinni open the icai": "https://www.icai.org",
+  "chinni open the pearson": "https://www.pearson.com",
+  "chinni open the prodigy": "https://www.prodigygame.com",
+  "chinni open the rosettastone": "https://www.rosettastone.com",
+  "chinni open the duolingo": "https://www.duolingo.com",
+  "chinni open the quizlet": "https://quizlet.com",
+  "chinni open the tutorme": "https://tutorme.com",
+  "chinni open the indeed": "https://www.indeed.com",
+  "chinni open the linkedin": "https://www.linkedin.com",
+  "chinni open the naukri": "https://www.naukri.com",
+  "chinni open the monster": "https://www.monster.com",
+  "chinni open the glassdoor": "https://www.glassdoor.com",
+  "chinni open the simplyhired": "https://www.simplyhired.com",
+  "chinni open the timesjobs": "https://www.timesjobs.com",
+  "chinni open the shine": "https://www.shine.com",
+  "chinni open the careerbuilder": "https://www.careerbuilder.com",
+  "chinni open the ziprecruiter": "https://www.ziprecruiter.com",
+  "chinni open the angellist": "https://angel.co",
+  "chinni open the fiverr": "https://www.fiverr.com",
+  "chinni open the upwork": "https://www.upwork.com",
+  "chinni open the toptal": "https://www.toptal.com",
+  "chinni open the freelancer": "https://www.freelancer.com",
+  "chinni open the peopleperhour": "https://www.peopleperhour.com",
+  "chinni open the weworkremotely": "https://weworkremotely.com",
+  "chinni open the remoteok": "https://remoteok.io",
+  "chinni open the hired": "https://hired.com",
+  "chinni open the jobspresso": "https://jobspresso.co",
+  "chinni open the amazon": "https://www.amazon.com",
+  "chinni open the flipkart": "https://www.flipkart.com",
+  "chinni open the bigbasket": "https://www.bigbasket.com",
+  "chinni open the swiggy": "https://www.swiggy.com",
+    "chinni open the zomato": "https://www.zomato.com",
+    "chinni open the dunzo": "https://www.dunzo.com",
+    "chinni open the grofers": "https://www.grofers.com",
+    "chinni open the instacart": "https://www.instacart.com",
+    "chinni open the ubereats": "https://www.ubereats.com",
+    "chinni open the doordash": "https://www.doordash.com",
+    "chinni open the postmates": "https://www.postmates.com",
+    "chinni open the grubhub": "https://www.grubhub.com",
+    "chinni open the pepperfry": "https://www.pepperfry.com",
+    "chinni open the urbanladder": "https://www.urbanladder.com",
+    "chinni open the ikea": "https://www.ikea.com",
+    "chinni open the ajio": "https://www.ajio.com",
+    "chinni open the myntra": "https://www.myntra.com",
+    "chinni open the nykaa": "https://www.nykaa.com",
+    "chinni open the shein": "https://www.shein.com",
+    "chinni open the lenskart": "https://www.lenskart.com",
+    "chinni open the reliancedigital": "https://www.reliancedigital.in",
+    "chinni open the tatacliq": "https://www.tatacliq.com",
+  "chinni open the snapdeal": "https://www.snapdeal.com",
+  "chinni open the firstcry": "https://www.firstcry.com",
+  "chinni open the pharmeasy": "https://www.pharmeasy.in",
+  "chinni open the netmeds": "https://www.netmeds.com",
+  "chinni open the 1mg": "https://www.1mg.com",
+  "chinni open the healthkart": "https://www.healthkart.com",
+  "chinni open the reliancefreshdirect": "https://www.reliancefreshdirect.com",
+  "chinni open the naturebasket": "https://www.naturesbasket.co.in",
+  "chinni open the freshtohome": "https://www.freshtohome.com",
+  "chinni open the licious": "https://www.licious.in",
+  "chinni open the meesho": "https://www.meesho.com",
+  "chinni open the paytmmall": "https://www.paytmmall.com",
+  "chinni open the ebay": "https://www.ebay.com",
+  "chinni open the walmart": "https://www.walmart.com",
+  "chinni open the bestbuy": "https://www.bestbuy.com",
+  "chinni open the kfc": "https://www.kfc.com",
+  "chinni open the dominos": "https://www.dominos.com",
+  "chinni open the pizzahut": "https://www.pizzahut.com",
+  "chinni open the subway": "https://www.subway.com",
+  "chinni open the netflix": "https://www.netflix.com",
+  "chinni open the youtube": "https://www.youtube.com",
+  "chinni open the hulu": "https://www.hulu.com",
+  "chinni open the disneyplus": "https://www.disneyplus.com",
+  "chinni open the amazonprimevideo": "https://www.primevideo.com",
+  "chinni open the hbo": "https://www.hbo.com",
+  "chinni open the hotstar": "https://www.hotstar.com",
+    "chinni open the spotify": "https://www.spotify.com",
+  "chinni open the pandora": "https://www.pandora.com",
+  "chinni open the soundcloud": "https://www.soundcloud.com",
+  "chinni open the twitch": "https://www.twitch.tv",
+  "chinni open the imdb": "https://www.imdb.com",
+  "chinni open the rottentomatoes": "https://www.rottentomatoes.com",
+  "chinni open the metacritic": "https://www.metacritic.com",
+  "chinni open the applemusic": "https://music.apple.com",
+  "chinni open the lastfm": "https://www.last.fm",
+  "chinni open the vevo": "https://www.vevo.com",
+  "chinni open the crackle": "https://www.crackle.com",
+  "chinni open the vudu": "https://www.vudu.com",
+  "chinni open the plex": "https://www.plex.tv",
+  "chinni open the dailymotion": "https://www.dailymotion.com",
+  "chinni open the fandango": "https://www.fandango.com",
+  "chinni open the shazam": "https://www.shazam.com",
+  "chinni open the audible": "https://www.audible.com",
+  "chinni open the gaana": "https://www.gaana.com",
+  "chinni open the jiosaavn": "https://www.jiosaavn.com",
+  "chinni open the wynkmusic": "https://wynk.in",
+  "chinni open the bookmyshow": "https://in.bookmyshow.com",
+  "chinni open the zee5": "https://www.zee5.com",
+  "chinni open the mx player": "https://www.mxplayer.in",
+  "chinni open the sonyliv": "https://www.sonyliv.com",
+  "chinni open the crunchyroll": "https://www.crunchyroll.com",
+  "chinni open the funimation": "https://www.funimation.com",
+  "chinni open the animeplanet": "https://www.anime-planet.com",
+  "chinni open the kissanime": "https://kissanime.rs",
+  "chinni open the popcornflix": "https://www.popcornflix.com",
+  "chinni open the vimeo": "https://vimeo.com",
+  "chinni open the primephonic": "https://www.primephonic.com",
+  "chinni open the bandcamp": "https://www.bandcamp.com",
+  "chinni open the reverbnation": "https://www.reverbnation.com",
+  }
+                console.log(recognition)
+                console.log("Speech Recognition will exit")
+
+                recognition.onstart=()=>{
+                    document.getElementById('status').innerHTML="Status : Start Listening"
+                }
+                recognition.onresult=(event)=>{
+                    let result=event.results[0][0].transcript.trim().toLowerCase()
+                    document.getElementById('status-1').innerHTML=result
+                    console.log(result)
+                    for(key in command){
+                    let matchedKey=result.includes(key.toLowerCase())
+                    if(matchedKey)
+                    {
+                        window.open(command[key],'_blank');
+                        document.getElementById('status-1').innerHTML=''
+                    }
+                    else{
+                        document.getElementById('status-1').innerHTML=`Error : ${result}`
+                    }
+                    }
+                    
+                }
+                recognition.onerror=(e)=>{
+                    document.getElementById('status').innerHTML="FAiled to Recognizing"
+                }
+                recognition.onend=()=>{
+                    document.getElementById('status').innerHTML="Status : Not Listening"
+                }
+                recognition.start()
+
+            }
+            else{
+                document.getElementById('status').innerHTML="Sorry! Your Browser Will not Supports the Speech Recognition API"
+            }
+        }
+        document.getElementById('startListening').addEventListener('click',speechRecognition)
+     </script>
+</body>
+</html>

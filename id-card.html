@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ID Card Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f5f6fa;
+    }
+
+    .container {
+      text-align: center;
+      width: 90%;
+      max-width: 600px;
+    }
+
+    .form-container {
+      background: #dcdde1;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      margin-bottom: 20px;
+    }
+
+    input, select, button {
+      margin: 10px 0;
+      padding: 10px;
+      width: 90%;
+      max-width: 400px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #44bd32;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #27ae60;
+    }
+
+    .id-card {
+      display: none;
+      background: #ffffff;
+      width: 350px;
+      border: 2px solid #3498db;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+    }
+
+    .id-card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+
+    .id-card h2, .id-card h4, .id-card p {
+      margin: 5px 0;
+    }
+
+    .id-card .footer {
+      margin-top: 15px;
+      color: #555;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h2>Generate Your ID Card</h2>
+      <input type="text" id="name" placeholder="Full Name">
+      <input type="text" id="role" placeholder="Role (e.g., Student, Employee)">
+      <input type="text" id="id-number" placeholder="ID Number">
+      <input type="file" id="photo" accept="image/*">
+      <button onclick="generateIdCard()">Generate</button>
+    </div>
+
+    <div class="id-card" id="id-card">
+      <img id="profile-pic" src="https://via.placeholder.com/80" alt="Profile">
+      <h2 id="card-name">Name</h2>
+      <h4 id="card-role">Role</h4>
+      <p id="card-id">ID Number</p>
+      <div class="footer">Company / Organization</div>
+    </div>
+  </div>
+
+  <script>
+    function generateIdCard() {
+      const name = document.getElementById("name").value || "Full Name";
+      const role = document.getElementById("role").value || "Role";
+      const idNumber = document.getElementById("id-number").value || "0000";
+      const photoInput = document.getElementById("photo");
+      const profilePic = document.getElementById("profile-pic");
+
+      // Update ID card fields
+      document.getElementById("card-name").textContent = name;
+      document.getElementById("card-role").textContent = role;
+      document.getElementById("card-id").textContent = `ID: ${idNumber}`;
+
+      // Handle profile picture upload
+      if (photoInput.files && photoInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          profilePic.src = e.target.result;
+        };
+        reader.readAsDataURL(photoInput.files[0]);
+      }
+
+      // Show the ID card
+      document.getElementById("id-card").style.display = "block";
+    }
+  </script>
+</body>
+</html>

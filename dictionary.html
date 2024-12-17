@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary App</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            text-align: center;
+        }
+        .or-color{
+            color:black;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #ddd;
+        }
+
+        /* Input Styling */
+        input {
+            padding: 12px 20px;
+            width: 80%;
+            max-width: 400px;
+            margin: 10px auto;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        ul{
+            list-style-type: none;
+        }
+        input:focus {
+            outline: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Meaning Display */
+        #displayMeaning {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 80%;
+            min-width: 500px;
+            margin: 20px auto;
+            font-size: 1.2rem;
+            color: #fff;
+            line-height: 1.5;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Error Styling */
+        .error {
+            color: #ff4b5c;
+        }
+
+        /* Loader */
+        #loader {
+            display: none;
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            input {
+                font-size: 0.9rem;
+                padding: 10px 15px;
+            }
+
+            #displayMeaning {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>📚 Dictionary App</h1>
+    <!-- <p>Enter a word to see its meaning:</p> -->
+    <input type="text" placeholder="Type a word..." id="inputText">
+    <div id="loader">Fetching meaning... 🔄</div>
+    <div id="displayMeaning">Type a word to see its meaning...</div>
+
+    <script>
+        function dictionary() {
+    let inputText = document.getElementById('inputText').value.trim();
+    let displayMeaning = document.getElementById('displayMeaning');
+    let loader = document.getElementById('loader');
+
+    // Reset previous styles and show loader
+    displayMeaning.innerHTML = "";
+    loader.style.display = "block";
+
+    // Handle empty input
+    if (inputText === "") {
+        loader.style.display = "none";
+        displayMeaning.textContent = "Please enter a word.";
+        displayMeaning.classList.add("error");
+        return;
+    }
+
+    // API URL
+    let apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${inputText}`;
+
+    // Fetch data
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Word not found. Try another word.");
+            }
+            return response.json();
+        })
+        .then(data => {
+            loader.style.display = "none";
+
+            // Check if data is available
+            if (!data[0]) {
+                displayMeaning.textContent = "No data found for this word.";
+                displayMeaning.classList.add("error");
+                return;
+            }
+
+            let wordData = data[0];
+            let meaningsHTML = "<h3>Meanings</h3><ul>";
+
+            wordData.meanings.forEach(meaning => {
+                meaningsHTML += `<li><strong>Part of Speech:</strong> ${meaning.partOfSpeech}<br>  ${meaning.definitions.map(def => def.definition).join(` <strong class="or-color">(or)</strong>`)}</li>`;
+            });
+            meaningsHTML += "</ul>";
+
+             
+
+            let antonymsHTML = "<h3>Antonyms</h3><ul>";
+            wordData.meanings.forEach(meaning => {
+                if (meaning.antonyms && meaning.antonyms.length > 0) {
+                    antonymsHTML += `<li>${meaning.antonyms.join(` <strong class="or-color">(or)</strong>`)}</li>`;
+                }
+            });
+            antonymsHTML += "</ul>";
+
+            let phoneticsHTML = "<h3>Phonetics</h3>";
+            if (wordData.phonetic) {
+                phoneticsHTML += `<p>${wordData.phonetic}</p>`;
+            }
+
+            // Display the extracted details
+            displayMeaning.innerHTML = `
+                <h2>Details for: ${inputText}</h2>
+                ${meaningsHTML}
+                 
+                ${antonymsHTML}
+                ${phoneticsHTML}
+            `;
+            displayMeaning.classList.remove("error");
+        })
+        .catch(error => {
+            loader.style.display = "none";
+            displayMeaning.textContent = error.message;
+            displayMeaning.classList.add("error");
+        });
+}
+
+
+        // Attach event listener to input field
+        document.getElementById('inputText').addEventListener('input', () => {
+            if (document.getElementById('inputText').value.trim().length > 0) {
+                dictionary();
+            } else {
+                document.getElementById('displayMeaning').textContent = "Type a word to see its meaning...";
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Info</title>
+    <style>
+         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+         }
+         .clock {
+      text-align: center;
+      padding:0;
+      color: white;
+      border-radius: 10px;
+      
+    }
+
+    .time {
+      font-size:1.5rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+
+    .date {
+      font-size: 1.5em;
+      letter-spacing: 0.05em;
+    }
+         
+         form {
+             
+             width: 60%;
+            
+         }
+         .input {
+            width: 70%;
+            padding: .3rem 0;
+            border-radius:1rem;
+            border: 2px solid #ccc;
+            font-size: 1.3rem;
+            text-align: center;
+            box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.133);
+         }
+         .input::placeholder {
+            text-align: center;
+            font-size: 1.3rem;
+            
+         }
+         button {
+            padding:.7rem 1rem;
+            border-radius: 3rem;
+         }
+         .display {
+              
+            text-align: center;
+            width: 90%;
+            margin: 6rem auto;
+            border-radius: .4rem;
+            background-color: lightgray;
+            box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.03);
+            filter: contrast(120%);
+         }
+         .country-section {
+             
+            backdrop-filter: blur(8px); /* Blurs the background */
+            background: rgba(0, 0, 0, 0.504); /* Semi-transparent white */
+            border: 1px solid rgba(205, 205, 13, 0.404); /* Subtle border */
+            border-radius:.4rem; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+            padding: 20px; /* Space inside the element */
+            color: black; /* Text color */
+            text-align: center;
+            min-width: 300px; /* Optional width */
+
+         }
+         .display-flex {
+            display: flex;
+            justify-content: space-between;
+            padding: 2%;
+         }
+         .content {
+            width: 50%;
+            text-align: start;
+            padding: 2%;
+            font-size: 20px;
+            
+           box-sizing: border-box;
+         }
+         .img {
+            width: 45%;
+            padding: .4rem;
+            /* box-shadow: 2px 2px 25px 5px rgba(0, 0, 0, 0.214);
+            border-radius:3rem 1rem 3rem 1rem; */
+         }
+         .img img{
+            object-fit:fill;
+            width:100%;
+            height:65vh;
+            filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.5));
+            object-fit:fill;
+            border-radius:3rem 1rem 3rem 1rem;
+         }
+         
+         p{
+            margin: .5rem 0;
+            
+         }
+          span{
+            overflow: hidden; /* Hide overflow */
+            text-overflow: ellipsis;
+          }
+
+         
+         #countryName{
+            font-weight: 600;
+            letter-spacing: .8rem;
+             font-size: 2.2rem;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+         }
+         .header{
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            background: #2c3e50;
+            z-index: 1000;
+            text-align: center;
+            padding: 0 .5rem;
+            box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.138);
+         }
+         #colorInput{
+            width:2rem;
+            /* border-radius: 50%; */
+            height:2rem;
+            border: none;
+            cursor: pointer;
+         }
+          
+    </style>
+</head>
+<body>
+    <section class="header">
+        <form action="" id="form">
+            <input type="text" id="textInput" placeholder="Enter The Country Name like India, France.." class="input">
+            <button type="submit">Search</button>
+        </form>
+        <input type="color" id="colorInput">
+        <input type="color" id="color-Input">
+    <div class="clock">
+        <div class="time" id="time">00:00:00</div>
+        <div class="date" id="date">Loading date...</div>
+      </div>
+    </section>
+    <section id="display" class="display">
+        <div class="country-section"  id="input-color">
+            <h1 id="countryName">Country Name</h1>
+            <div class="display-flex" >
+                <div class="content">
+                    <h2 id="officialName">Official Name: -</h2>
+                    <p><strong class="strong">Capital</strong>: <span id="capital" class="span">-</span></p>
+                    <p><strong class="strong">Common Languages</strong>: <span id="language" class="span">-</span></p>
+                    <p><strong class="strong">Area</strong>: <span id="area" class="span">-</span> <sup>2</sup>Kms</p>
+                    <p><strong class="strong">Latitude</strong>: <span id="latitude">-</span> &nbsp; &nbsp;<strong>Longitude</strong>: <span id="longitude">-</span></p>
+                    <p><strong class="strong">Time Zone</strong>: <span id="timezone">-</span></p>
+                    <p><strong class="strong">Population</strong>: <span id="population">-</span></p>
+                    <p><strong class="strong">Country Code</strong>: <span id="countryCode">-</span></p>
+                    <p><strong class="strong">Currency</strong>: <span id="currency">-</span></p>
+                    <p><strong class="strong">Borders</strong>: <span id="borders">-</span></p>
+                    <p><strong class="strong">Continent</strong>: <span id="continent">-</span> <strong>Region</strong>: <span id="region">-</span></p>
+                    <p><strong class="strong">Subregion</strong>: <span id="subregion">-</span></p>
+                    <p><strong class="strong">Country Description</strong>: <span id="description">-</span></p>
+                    <p><strong class="strong">Top Level Domain for indicating the Country is </strong>: <span id="tld">-</span></p>
+                </div>
+                <div class="img">
+                    <img id="countryFlag" src="" alt="Flag of the country"  >
+                </div>
+            </div>
+            <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15225.895442867586!2d78.44108889999998!3d17.43701955!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1733228554809!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+
+        </div>
+    </section>
+
+    <script>
+            document.getElementById('colorInput').addEventListener('input',color=>{
+                let colorValue=document.getElementById('colorInput').value;
+                document.getElementById('input-color').style.color=colorValue;
+                
+            })
+            document.getElementById('color-Input').addEventListener('input', event => {
+            const spanColor = event.target.value; // Get the color from the input field
+            const spans = document.getElementsByTagName('span'); // Get all <span> elements
+
+            // Apply the color to each <span>
+            for (let span of spans) {
+                    span.style.color = spanColor;
+            }
+        });
+
+
+        function updateClock() {
+      const now = new Date();
+
+      // Get hours, minutes, and seconds
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+
+      // Get date
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const formattedDate = now.toLocaleDateString('en-US', options);
+
+      // Update HTML
+      document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`;
+      document.getElementById('date').textContent = formattedDate;
+    }
+
+    // Update clock every second
+    setInterval(updateClock, 1000);
+    updateClock();
+
+
+    
+        function countryDetails(event) {
+            event.preventDefault();
+            const inputText = document.getElementById('textInput').value.trim().toLowerCase();
+            const apiUrl = `https://restcountries.com/v3.1/name/${inputText}`;
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Failed to fetch the country details: " + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const countryData = data[0];
+                    console.log(countryData)
+
+                    // Updating the display with the country information
+                    document.getElementById('countryName').textContent = countryData.name.common;
+                    document.getElementById('officialName').textContent = `Official Name: ${countryData.name.official}`;
+                    document.getElementById('capital').textContent = countryData.capital.join(',');
+                    document.getElementById('language').textContent = countryData.languages ? Object.values(countryData.languages).join(', ')+'.' : 'N/A';
+                    document.getElementById('continent').textContent = countryData.continents ? countryData.continents.join(', ')+'.' : 'N/A';
+                    document.getElementById('region').textContent = countryData.region;
+                    document.getElementById('area').textContent = countryData.area;
+                    document.getElementById('latitude').textContent = countryData.latlng ? countryData.latlng[0] : 'N/A';
+                    document.getElementById('longitude').textContent = countryData.latlng ? countryData.latlng[1] : 'N/A';
+                    document.getElementById('timezone').textContent = countryData.timezones ? countryData.timezones.join(', ')+'.' : 'N/A';
+                    document.getElementById('population').textContent = countryData.population;
+                    document.getElementById('countryCode').textContent = `${countryData.idd.root}${countryData.idd.suffixes.join(',').slice(0,5)} - xxxxxxxxxx `;
+                    document.getElementById('currency').textContent = countryData.currencies ? countryData.currencies[Object.keys(countryData.currencies)[0]].name +`( ${countryData.currencies[Object.keys(countryData.currencies)[0]].symbol})` : 'N/A';
+                    document.getElementById('borders').textContent = countryData.borders ? countryData.borders.join(', ')+'.' : 'None';
+                    document.getElementById('subregion').textContent = countryData.subregion;
+                    document.getElementById('tld').textContent = countryData.tld.join(',')+'.';
+                    document.getElementById('description').textContent = countryData.flags.alt+'.';
+                    document.getElementById('countryFlag').src =countryData.coatOfArms.png? countryData.coatOfArms.png : countryData.flags.png;
+                    document.getElementById('display').style.cssText = `background-image: url('${countryData.flags.png}'); background-size: cover; background-position: center;`;
+                    // document.getElementById('map').src  = countryData.maps.googleMaps ? countryData.maps.googleMaps : googleMapsEmbedUrl;
+
+                })
+                .catch(error => {
+                    console.error("Error fetching country data:", error);
+                    alert("Country not found. Please try again.");
+                });
+        }
+
+        document.getElementById('form').addEventListener('submit', countryDetails);
+    </script>
+
+</body>
+</html>

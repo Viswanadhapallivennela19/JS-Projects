@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Food Search</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+        a{
+            text-decoration: none;
+            transition: all 0.5s;
+        }
+        form{
+            width: 100%;
+            padding: 1%;
+            margin:0 auto 0;
+            background-color: aliceblue;
+            border: 2px solid #ccc;
+            text-align: center;
+        }
+        label{
+            font-size: 2.3rem;
+            margin:.5rem auto .7rem;
+             
+        }
+        input{
+            width: 70%;
+            padding: .5rem 1rem;
+        }
+        button{
+            padding: .5rem .7rem;
+            display: flex;
+            justify-content: center;
+            margin: .5rem auto;
+            border-radius: .2rem;
+            border: none;
+            background-color:lightcoral;
+        }
+        #data-display{
+            
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            place-items: center;
+        }
+        .card{
+            width:80%;
+            box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.288);
+            margin: .5rem .3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding:.3rem;
+            transition:transform 0.5s ease-in-out;
+            &:hover{
+                transform: scale(1.02);
+            }
+        }
+        .img-div{
+            width:50%;
+        }
+        .content-div{
+            width: 50%;
+            padding: 0 .3rem ;
+        }
+        .content-div a{
+             
+            color: burlywood;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            font-size: 1.5rem;
+            background-color: lightgray;
+            &:hover{
+                color: red;
+                letter-spacing: .5rem;
+            }
+        }
+        .img-div img{
+            width: 100%;
+            border-radius: 20px 10px;
+            animation:chinni 30s infinite alternate;
+        } 
+        @keyframes chinni{
+            0%,100%{
+                border-radius: 20px 10px;
+            }
+            20%{
+                border-radius:30% 70% 70% 30% / 30% 30% 70% 70% ;
+            }
+            40%{
+                border-radius:30% 70% 100% 0% / 0% 100% 0% 100% ;
+            }
+            60%{
+                border-radius:17% 83% 66% 34% / 0% 54% 46% 100% ;
+            }
+            80%{
+                border-radius:100% 0% 66% 34% / 39% 0% 100% 61% ;
+            }
+        }
+        @media (max-width:900px){
+            #data-display{
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+    </style>
+</head>
+<body>
+    
+    <form id="form">
+        <label for="">Favorite Food Search</label><br>
+        <input type="text" id="textInput" placeholder="Enter Food Item(chicken,paneer,biryani)">
+        <button id="submit" type="submit">Search Items</button>
+    </form>
+    <div id="data-display"></div>
+
+
+
+     
+    <script>
+        function foodItemSearch(event){
+            event.preventDefault()
+            let data=document.getElementById('textInput').value.trim()
+            if(!data){
+                alert("Please Enter Valid Food Items")
+            }
+            else{ 
+            let apiUrl=`https://www.themealdb.com/api/json/v1/1/search.php?s=${data}`
+            fetch(apiUrl)
+            .then(response=>{
+                if(!response.ok){
+                    throw new error(`failed to fetch the items because HTTP error(${response.status})`)
+                }
+                 
+                return response.json()
+            })
+            .then(data=>{
+                let dataDisplay=document.getElementById('data-display')
+                console.log(data)
+                if(data.meals){
+                dataDisplay.innerHTML=data.meals.map(meal=>
+                    `<div class="card">
+                        <div class="content-div">
+                        <h1><strong>${meal.strMeal}</strong></h1>
+                        <p><strong>Country</strong> :${meal.strArea}</p>
+                        <p><strong>Category</strong> :${meal.strCategory}</p>
+                        <p><strong>Instructions</strong> :${meal.strInstructions.slice(0,150)}</p>
+                        <a href="https://www.linkedin.com/in/v-vennela?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">Read More</a>
+                        </div>
+                        <div class="img-div">
+                        <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
+                        </div>
+                    </div>`
+
+                ).join('')
+                }
+                else{
+                    dataDisplay.innerHTML="So such item Found"
+                }
+            })
+            .catch(error=>{
+                dataDisplay.innerHTML=''
+            })
+            }
+        }
+        document.getElementById('form').addEventListener('submit',foodItemSearch);
+
+         
+    </script>
+</body>
+</html>

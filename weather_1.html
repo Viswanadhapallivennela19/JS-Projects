@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Report</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #3b8d99, #6b6b83, #aa4b6b);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background: #ff8c42;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #e07738;
+        }
+
+        #displayReport {
+            margin-top: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #displayReport h1, #displayReport h3 {
+            color: #fff;
+        }
+
+        #spinner {
+            display: none;
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            color: #ff8c42;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            button, input {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Weather Report App</h1>
+    <form id="form">
+        <input type="text" id="inputText" placeholder="Enter a City Name">
+        <button type="submit">Search</button>
+    </form>
+    <div id="spinner">Loading...</div>
+    <div id="displayReport"></div>
+
+    <script>
+        async function weatherReport(event) {
+            event.preventDefault();
+
+            const inputText = document.getElementById('inputText').value.trim();
+            const displayReport = document.getElementById('displayReport');
+            const spinner = document.getElementById('spinner');
+
+            // Clear previous results
+            displayReport.innerHTML = '';
+            spinner.style.display = 'block';
+
+            if (!inputText) {
+                spinner.style.display = 'none';
+                alert('Please enter a valid city name!');
+                return;
+            }
+
+            const apiKey = `c4f86ece00bc8aa272652ac9065af12d`;
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${inputText}&appid=${apiKey}&units=metric`;
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`City not found (${response.status})`);
+                }
+
+                const data = await response.json();
+                spinner.style.display = 'none';
+
+                displayReport.innerHTML = `
+                    <h1>${data.name}, ${data.sys.country}</h1>
+                    <img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="${data.weather[0].description}" />
+                    <h3>Temperature: ${data.main.temp}°C</h3>
+                    <h3>Weather: ${data.weather[0].description}</h3>
+                    <h3>Humidity: ${data.main.humidity}%</h3>
+                    <h3>Wind Speed: ${data.wind.speed} m/s</h3>
+                    <h3>Coordinates: [${data.coord.lat}, ${data.coord.lon}]</h3>
+                `;
+            } catch (error) {
+                spinner.style.display = 'none';
+                displayReport.innerHTML = `<h3 style="color: red;">Error: ${error.message}</h3>`;
+            }
+        }
+
+        document.getElementById('form').addEventListener('submit', weatherReport);
+    </script>
+</body>
+</html>

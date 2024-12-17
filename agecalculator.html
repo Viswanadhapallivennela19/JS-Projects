@@ -1,0 +1,80 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background:radial-gradient(circle,lightgray,lightcoral,lightblue);
+            height: 100vh;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .age-calculator{
+            width: 60%;
+            margin: 14rem auto 0;
+            height: 12rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+            background-color: white;
+            box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.092);
+            border-radius: .6rem;
+            text-align: center;
+        }
+        input{
+            width: 60%;
+            padding: 1rem;
+            border-radius: .2rem;
+            border: 2px solid #ccc;
+            margin: .5rem auto;
+        }
+        #age{
+            margin:1rem 0 ;
+            color:rgb(12, 146, 204);
+            font-weight: 800;
+        
+            font-size: 1.5rem;
+        }
+        h1{
+            margin: 1rem 0;
+        }
+    </style>
+ </head>
+ <body>
+    <section class="age-calculator">
+        <h1>Date of Birth</h1>
+        <input type="text" placeholder="Enter Your Date of Birth(DD/MM/YYYY)" id="dob">
+        <h3 id="age"></h3>
+    </section>
+    <script>
+        function ageCalculator(){
+            let dob=document.getElementById('dob').value;
+            console.log(typeof(dob))
+            let ageValue=document.getElementById('age')
+            let datePattern=/^(\d{2})\/(\d{2})\/(\d{4})$/
+            let match=dob.match(datePattern)
+            if(!match){
+                ageValue.innerText="Please Enter Valid Date of Birth(DD/MM/YYYY)"
+                return;
+            }
+            let [day,month,year]=dob.split('/').map(Number);
+            let currentDate=new Date()
+            let currentDay=currentDate.getDate()
+            let currentMonth=currentDate.getMonth()+1
+            let currentYear=currentDate.getFullYear()
+            let age=currentYear-year
+            if(currentMonth<month ||(currentMonth==month && currentDay<day)){
+                age--
+            }
+             ageValue.innerText=`Your Age is : ${age}`
+
+        }
+        document.getElementById('dob').addEventListener('input',ageCalculator)
+    </script>
+ </body>
+ </html>
