@@ -5,62 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>App Grid</title>
   <style>
-    /* General Styles */
+   
     body {
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-     background-color: #8EC5FC;
-background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
-
+      background-color: #8EC5FC;
+      background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
     }
-
-    /* Grid Container */
+ 
     .grid-container {
       display: grid;
-      grid-template-columns: repeat(5, 1fr); /* Fixed 5 columns */
+      grid-template-columns: repeat(5, 1fr);  
       gap: 20px;
-      padding: 20px;
+      padding: 30px;
       max-width: 1200px;
       width: 100%;
-    }
-    a{
-      text-decoration:none;
-     color:black;
-      letter-spacing:.1rem;
+      background: #E0C3FC;
+      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15), -10px -10px 20px rgba(255, 255, 255, 0.5);
+      border-radius: 25px;
     }
 
-    /* Grid Items */
+    a {
+      text-decoration: none;
+      color: black;
+      letter-spacing: 0.1rem;
+      font-size: 18px;
+    }
+
+   
     .grid-item {
-      border-radius: 15px;
-      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2), -6px -6px 12px rgba(255, 255, 255, 0.8);
       text-align: center;
-      padding: 25px;
+      padding: 30px;
       transition: all 0.3s ease;
       cursor: pointer;
-      font-size: 18px;
       font-weight: bold;
-      color: #000000;
+      background: #E0C3FC;
     }
 
      
-
-    /* Hover Effect */
     .grid-item:hover {
       transform: translateY(-5px);
-      opacity: 0.9;
-      box-shadow: inset 4px 4px 8px #bebebe, inset -4px -4px 8px #ffffff;
-      color:white;
+      box-shadow: inset 6px 6px 12px rgba(0, 0, 0, 0.2), inset -6px -6px 12px rgba(255, 255, 255, 0.8);
+      color: white;
+      background: linear-gradient(145deg, #D4B3F3, #F0D4FF);
     }
 
     /* Responsive Design */
     @media (max-width: 768px) {
       .grid-container {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+        grid-template-columns: repeat(2, 1fr); 
       }
       .grid-item {
         font-size: 16px;
@@ -70,7 +70,7 @@ background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
 
     @media (max-width: 480px) {
       .grid-container {
-        grid-template-columns: 1fr; /* 1 column on mobile screens */
+        grid-template-columns: 1fr;  
       }
       .grid-item {
         font-size: 14px;
@@ -90,11 +90,11 @@ background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
     <div class="grid-item"><a href="https://viswanadhapallivennela19.github.io/shoppingCart/form.html">Shopping Cart</a></div>
     <div class="grid-item"><a href="agecalculator.html">Age Calculator</a></div>
     <div class="grid-item"><a href="text-conversion.html">Text-to-Voice</a></div>
-    <div class="grid-item"><a href="geoinformation.html">Geo Information</a></div>
+    <div class="grid-item"><a href="geoInformation.html">Geo Information</a></div>
     <div class="grid-item"><a href="stickey-notes.html">Sticky Notes</a></div>
-     <div class="grid-item"><a href="food-practice.html">Favourite Food</a></div>
-     <div class="grid-item"><a href="id-card.html">Id Generator</a></div>
-     <div class="grid-item"><a href="movie.html"> </a>Favourite Movie</div>
+    <div class="grid-item"><a href="food-practice.html">Favourite Food</a></div>
+    <div class="grid-item"><a href="id-card.html">Id Generator</a></div>
+    <div class="grid-item"><a href="movie.html">Favourite Movie</a></div>
     <div class="grid-item"><a href="rock-paper-game.html">Rock Paper Game</a></div>
     <div class="grid-item"><a href="tip-calculator.html">Tip Calculator</a></div>
   </div>
